@@ -1,0 +1,28 @@
+{
+  "name": "splix-debug-client",
+  "version": "1.0.0",
+  "description": "Splix.io client for debugging",
+  "main": "game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JosefKuchar/Splix.io-DebugClient.git"
+  },
+  "keywords": [
+    "Debug",
+    "Splix.io",
+    "JosefKuchar"
+  ],
+  "author": "JosefKuchař",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/JosefKuchar/Splix.io-DebugClient/issues"
+  },
+  "homepage": "https://github.com/JosefKuchar/Splix.io-DebugClient#readme",
+  "devDependencies": {
+    "browser-sync": "^2.16.0",
+    "gulp": "^3.9.1"
+  }
+}
