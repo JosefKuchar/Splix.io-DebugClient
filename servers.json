@@ -1,0 +1,274 @@
+{
+    "groups": [{
+        "servers": [{
+            "ip": "46.101.145.217",
+            "lobbies": [{
+                "hash": "alligator",
+                "port": 8003
+            }, {
+                "hash": "pig",
+                "port": 8002
+            }, {
+                "hash": "bee",
+                "port": 8001
+            }]
+        }, {
+            "ip": "46.101.100.252",
+            "lobbies": [{
+                "hash": "moth",
+                "port": 8002
+            }, {
+                "hash": "glipglop",
+                "port": 8001
+            }]
+        }, {
+            "ip": "46.101.120.54",
+            "lobbies": [{
+                "hash": "eagle",
+                "port": 8004
+            }, {
+                "hash": "squirrel",
+                "port": 8003
+            }]
+        }, {
+            "ip": "139.59.157.113",
+            "lobbies": [{
+                "hash": "platypus",
+                "port": 8003
+            }, {
+                "hash": "mosquito",
+                "port": 8001
+            }]
+        }, {
+            "ip": "139.59.159.61",
+            "lobbies": [{
+                "hash": "spider",
+                "port": 8002
+            }, {
+                "hash": "scorpion",
+                "port": 8003
+            }]
+        }, {
+            "ip": "138.68.77.47",
+            "lobbies": [{
+                "hash": "lynx",
+                "port": 8003
+            }, {
+                "hash": "fish",
+                "port": 8002
+            }]
+        }, {
+            "ip": "188.166.161.82",
+            "lobbies": [{
+                "hash": "rat",
+                "port": 8003
+            }, {
+                "hash": "crocodile",
+                "port": 8001
+            }]
+        }, {
+            "ip": "46.101.97.135",
+            "lobbies": [{
+                "hash": "zebra",
+                "port": 8002
+            }, {
+                "hash": "goldfish",
+                "port": 8001
+            }]
+        }, {
+            "ip": "46.101.105.19",
+            "lobbies": [{
+                "hash": "snake",
+                "port": 8002
+            }, {
+                "hash": "bear",
+                "port": 8001
+            }]
+        }],
+        "pingIp": "139.59.144.218"
+    }, {
+        "servers": [{
+            "ip": "139.59.30.150",
+            "lobbies": [{
+                "hash": "tiger",
+                "port": 8002
+            }, {
+                "hash": "dragon",
+                "port": 8003
+            }]
+        }],
+        "pingIp": "139.59.26.142"
+    }, {
+        "servers": [{
+            "ip": "95.85.13.91",
+            "lobbies": [{
+                "hash": "plankton",
+                "port": 8003
+            }, {
+                "hash": "shark",
+                "port": 8002
+            }, {
+                "hash": "monkey",
+                "port": 8001
+            }]
+        }, {
+            "ip": "178.62.252.248",
+            "lobbies": [{
+                "hash": "sheep",
+                "port": 8003
+            }, {
+                "hash": "rabbit",
+                "port": 8004
+            }, {
+                "hash": "penguin",
+                "port": 8001
+            }]
+        }, {
+            "ip": "37.139.31.142",
+            "lobbies": [{
+                "hash": "panda",
+                "port": 8004
+            }, {
+                "hash": "chicken",
+                "port": 8003
+            }, {
+                "hash": "ant",
+                "port": 8001
+            }]
+        }, {
+            "ip": "188.166.17.233",
+            "lobbies": [{
+                "hash": "jellyfish",
+                "port": 8003
+            }, {
+                "hash": "koala",
+                "port": 8004
+            }, {
+                "hash": "giraffe",
+                "port": 8002
+            }]
+        }, {
+            "ip": "146.185.140.110",
+            "lobbies": [{
+                "hash": "dog",
+                "port": 8002
+            }, {
+                "hash": "grasshopper",
+                "port": 8001
+            }]
+        }, {
+            "ip": "188.166.66.86",
+            "lobbies": [{
+                "hash": "duck",
+                "port": 8003
+            }, {
+                "hash": "hamster",
+                "port": 8004
+            }, {
+                "hash": "caterpillar",
+                "port": 8001
+            }]
+        }, {
+            "ip": "178.62.208.187",
+            "lobbies": [{
+                "hash": "lion",
+                "port": 8002
+            }, {
+                "hash": "pelican",
+                "port": 8001
+            }]
+        }],
+        "pingIp": "146.185.148.160"
+    }, {
+        "servers": [{
+            "ip": "104.131.170.207",
+            "lobbies": [{
+                "hash": "seagull",
+                "port": 8002
+            }, {
+                "hash": "octopus",
+                "port": 8001
+            }]
+        }, {
+            "ip": "198.199.85.58",
+            "lobbies": [{
+                "hash": "cat",
+                "port": 8005
+            }, {
+                "hash": "seal",
+                "port": 8004
+            }, {
+                "hash": "bird",
+                "port": 8001
+            }]
+        }, {
+            "ip": "45.55.241.232",
+            "lobbies": [{
+                "hash": "butterfly",
+                "port": 8001
+            }]
+        }],
+        "pingIp": "159.203.183.50"
+    }, {
+        "servers": [{
+            "ip": "138.197.134.61",
+            "lobbies": [{
+                "hash": "elephant",
+                "port": 8002
+            }, {
+                "hash": "falcon",
+                "port": 8003
+            }, {
+                "hash": "hyena",
+                "port": 8001
+            }]
+        }],
+        "pingIp": "159.203.60.250"
+    }, {
+        "servers": [{
+            "ip": "128.199.112.188",
+            "lobbies": [{
+                "hash": "fox",
+                "port": 8002
+            }, {
+                "hash": "dolphin",
+                "port": 8001
+            }]
+        }, {
+            "ip": "128.199.124.74",
+            "lobbies": [{
+                "hash": "cow",
+                "port": 8004
+            }, {
+                "hash": "goat",
+                "port": 8002
+            }, {
+                "hash": "snail",
+                "port": 8001
+            }, {
+                "hash": "lizard",
+                "port": 8003
+            }]
+        }, {
+            "ip": "188.166.249.248",
+            "lobbies": [{
+                "hash": "frog",
+                "port": 8001
+            }]
+        }],
+        "pingIp": "128.199.134.133"
+    }, {
+        "servers": [{
+            "ip": "159.203.208.194",
+            "lobbies": [{
+                "hash": "fly",
+                "port": 8004
+            }, {
+                "hash": "whale",
+                "port": 8003
+            }]
+        }],
+        "pingIp": "104.131.156.144"
+    }],
+    "requiredMobileVersion": 11
+}

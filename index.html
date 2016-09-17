@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>splix.io</title>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <link rel="stylesheet" href="style.css" />
+  <script async src="game.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=0.8, user-scalable=no" />
+  <meta name="description" content="The newest trend in io games. Conquer as much land as possible and try to become biggest of them all." />
+  <meta name="keywords" content="splixio, splix.io, online multiplayer, strategy, game, strategy game, io games, agar.io, multiplayer, conquer, conquer land, capture, games, fun, massive multiplayer, web browser games, html5, flash, web game">
+  <link rel="icon" type="image/png" href="/img/favicon-196x196.png" sizes="196x196" />
+  <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16" />
+  <link rel="icon" type="image/png" href="/img/favicon-128.png" sizes="128x128" />
+  <link rel="canonical" href="http://splix.io" />
+  <meta property="og:title" content="splix.io" />
+  <meta property="og:description" content="The newest trend in io games. Conquer as much land as possible and try to become biggest of them all." />
+  <meta property="og:url" content="http://splix.io" />
+  <meta property="og:image" content="http://splix.io/img/fbthumb.png" />
+  <link rel="image_src" href="http://splix.io/img/fbthumb.png" />
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Videogame",
+      "name": "splix.io",
+      "url": "http://splix.io",
+      "sameAs": ["https://twitter.com/splixio", "https://www.facebook.com/splix.io/", "https://www.reddit.com/r/Splixio/", "https://www.youtube.com/c/splixio", "https://en.wikipedia.org/wiki/Splix.io"],
+      "image": "http://splix.io/img/poster.png",
+      "screenshot": "nyi",
+      "description": "The newest trend in io games. Conquer as much land as possible and try to become biggest of them all.",
+      "inLanguage": ["English"],
+      "genre": ["MMO", "Massively multiplayer online", "RTS", "Real-time strategy", "Casual game"],
+      "creator": {
+        "@type": "Person",
+        "name": "Jesper the End",
+        "url": "https://twitter.com/jespertheend"
+      },
+      "gamePlatform": "webgame",
+      "applicationCategory": ["Game", "webgame", "GameApplication"],
+      "operatingSystem": ["Windows", "OSX", "Linux"],
+      "exampleOfWork": [{
+        "@type": "VideoGame",
+        "gamePlatform": ["http://wikipedia.org/wiki/Windows_7", "https://en.wikipedia.org/wiki/Windows_8", "https://en.wikipedia.org/wiki/Windows_10", "https://en.wikipedia.org/wiki/OS_X", "https://en.wikipedia.org/wiki/Windows_XP",
+          "https://en.wikipedia.org/wiki/Windows_Vista"
+        ],
+        "contentRating": "ithink 3+",
+      }]
+    }
+  </script>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@splixio">
+  <meta name="twitter:title" content="splix.io">
+  <meta name="twitter:description" content="The newest trend in io games. Conquer as much land as possible and try to become biggest of them all.">
+  <meta name="twitter:image" content="http://splix.io/img/fbthumb.png">
+</head>
+<body ontouchstart="">
+  <div id="touchControls" style="display: none;"></div>
+  <div id="beginScreen">
+    <div id="social" style="opacity: 0; display: none;">
+      <a class="twitter-follow-button" data-show-count="false" data-show-screen-name="false" href="https://twitter.com/SplixIo"></a>
+      <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Check%20out%20this%20game%20I%20have%20just%20found&amp;url=http://splix.io&amp;hashtags=splixio&amp;related=splixio%3AOfficial%20Twitter%20account,jespertheend%3ADeveloper,"></a>
+      <br>
+      <div id="fb-root"></div>
+      <div class="fb-like" data-href="https://www.facebook.com/splix.io/" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+      <br>
+      <div id="socialEmpty"></div>
+      <div class="g-ytsubscribe" data-channelid="UCgMrUe4HjXAfVa-c0OxOELA" data-layout="default" data-count="hidden" data-onytevent="onYtEvent"></div>
+      <br>
+      <a href="https://discord.gg/Zr3r5fJ" target="_blank" id="discordA"></a>
+      <a href="https://www.reddit.com/r/splix" target="_blank" id="redditA"></a>
+      <br>
+      <a class="socialLink" href="http://iogames.space/" target="_blank">More io games</a><br>
+    </div>
+    <canvas id="logoCanvas"></canvas><br>
+    <div id="notification" style="display: none;"></div>
+    <div id="lastStats" style="display: none;">
+      <div id="lastStatsLeft" class="lastStatsBlock" style="text-align: right;">Last game:</div>
+      <div id="lastStatsRight" class="lastStatsBlock" style="text-align: left;"></div>
+    </div>
+    <div id="preroll">
+    </div>
+    <form id="nameForm" class="fancyBox greenBox" method="get">
+      <input type="text" class="fancyBox" maxlength="20" id="nameInput" placeholder="Enter your name" />
+      <input type="submit" class="fancyBox" id="joinButton" value="Join" />
+    </form>
+    <br><br>
+    <center>
+      <div class="fb-ad" data-placementid="1812921762327343_1812922822327237" data-format="300x250" data-testmode="false"></div>
+    </center>
+    <div id="adbox" style="display: none;">
+      <!-- <a href='http://trkur5.com/247618/25269?i=246625' target="_blank"><img src='http://pixxur.com/247618/246625-300x250.jpg' /></a> -->
+    </div>
+    <div id="tutorialText" style="opacity: 0;"></div>
+    <canvas id="tutorialCanvas" width="300" height="300"></canvas>
+    <div id="expandPage"></div>
+    <canvas id="skinButton" title="block customization" style="display: none;" width="30" height="30"></canvas>
+    <div id="skinButtonShadow"></div>
+    <div id="shareToUnlock" style="display: none;">
+      <div id="shareTw" class="shareButton"></div>
+      <div id="shareFb" class="shareButton"></div>
+      <div id="shareText">Share to unlock<br>block customization!</div>
+    </div>
+    <div id="cornerLinks">
+      <a href="/about">about</a>
+      <a href="/leaderboards">leaderboards</a>
+      <a href="/privacy" title="wubalubadubdub">privacy</a>
+    </div>
+    <div id="appLinks"></div>
+  </div>
+  <div id="skinScreen" style="display: none;">
+    <div class="skinButtonContainer">
+      <div id="prevColor" class="skinButton skinButtonLeft"></div>
+      <div class="skinValue">Color</div>
+      <div id="nextColor" class="skinButton skinButtonRight"></div>
+    </div>
+    <div class="skinButtonContainer">
+      <div id="prevPattern" class="skinButton skinButtonLeft"></div>
+      <div class="skinValue">Pattern</div>
+      <div id="nextPattern" class="skinButton skinButtonRight"></div>
+    </div>
+    <div class="skinButtonContainer">
+      <div class="skinValue" id="skinSave">Save</div>
+    </div>
+    <canvas id="skinScreenCanvas" class="fullscreenCanvas"></canvas>
+  </div>
+  <div id="playUI" style="display: none;">
+    <div id="scoreBlock" class="greenBox">
+      <span>
+          <span>Kills: </span>
+      <span id="myKills" class="rank"></span>
+      </span>
+      <br>
+      <span>Blocks captured: <span id="blockCaptureCount" class="rank"></span></span>
+      <br>
+      <span title="blocks + kills x 500">Score: <span id="score"></span></span>
+      <br>
+      <span>Your rank: <span id="myRank" class="rank"></span> of <span id="totalPlayers" class="rank"></span></span>
+    </div>
+    <div id="leaderboard" class="greenBox">
+    </div>
+    <div id="miniMap" class="greenBox">
+      <div id="miniMapPlayer"></div>
+      <canvas id="minimapCanvas" width="160" height="160"></canvas>
+    </div>
+    <div id="closeNotification" style="display: none;" class="greenBox">
+      This server is about to close, refresh to join a full server.
+    </div>
+  </div>
+  <canvas id="transitionCanvas" class="fullscreenCanvas" style="z-index: 1000; display: none;"></canvas>
+  <canvas id="mainCanvas" class="fullscreenCanvas" style="z-index: -100; display: none;"></canvas>
+  <script>
+    //detect canvas support
+    (function(e) {
+      if (!(e.getContext && e.getContext("2d"))) {
+        alert("Your browser doesn't support this game, please download a modern browser that supports html5 games. We recommend you to download Google Chrome.");
+      }
+    })(document.createElement("canvas"));
+  </script>
+</body>
+</html>
