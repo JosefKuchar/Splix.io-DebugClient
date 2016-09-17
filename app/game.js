@@ -244,14 +244,38 @@ function trailPush(a, b) {
 }
 
 function honkStart() {
+  //Honk start
   honkStartTime = Date.now()
 }
 
 function honkEnd() {
+  //Honk stop
   var currentTime = Date.now();
+
+  //Check if honk stop is bigger than honk start
   if (currentTime > lastHonkTime) {
+    //Get deltatime
     var deltaTime = currentTime - honkStartTime;
-    deltaTime = clamp(deltaTime, 0, 1e3), lastHonkTime = currentTime + deltaTime, deltaTime = iLerp(0, 1e3, deltaTime), deltaTime *= 255, deltaTime = Math.floor(deltaTime), wsSendMsg(sendAction.HONK, deltaTime);
+
+    //Clamp value to 0-1000
+    deltaTime = clamp(deltaTime, 0, 1e3);
+
+    //Get "lastHonkTime"
+    lastHonkTime = currentTime + deltaTime;
+
+    //Delta time to float between 0-1
+    deltaTime = iLerp(0, 1e3, deltaTime);
+
+    //Normalize to 0-255
+    deltaTime *= 255;
+
+    //Delta time float to decimal
+    deltaTime = Math.floor(deltaTime);
+
+    //Send honk
+    wsSendMsg(sendAction.HONK, deltaTime);
+
+    //Honk animation
     for (var c = 0; c < players.length; c++) {
       var d = players[c];
       d.isMyPlayer && d.doHonk(Math.max(70, deltaTime))
