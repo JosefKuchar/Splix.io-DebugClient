@@ -311,7 +311,6 @@ function onClose() {
   if (ws && ws.readyState == WebSocket.OPEN && ws.close(), playingAndReady)
     if (closedBecauseOfDeath) {
       var a = Date.now() - wsOnOpenTime;
-      ga("send", "timing", "Game", "game_session_time", a)
     } else doTransition("", !1, resetAll), ga("send", "event", "Game", "lost_connection_mid_game"), setNotification("The connection was lost :/");
   else isTransitioning ? showCouldntConnectAfterTransition = !0 : couldntConnect() && showBeginHideMainCanvas();
   ws = null, isConnecting = !1
@@ -350,6 +349,7 @@ function doConnect(a) {
 }
 
 function onMessage(a) {
+  console.log("Recieving:", a);
   var b, c, d, e, f, g, h, i, j, k, l, m = new Uint8Array(a.data);
   if (m[0] == receiveAction.UPDATE_BLOCKS && (b = bytesToInt(m[1], m[2]), c = bytesToInt(m[3], m[4]), d = m[5], i = getBlock(b, c), i.setBlockId(d)), m[0] == receiveAction.PLAYER_POS) {
     b = bytesToInt(m[1], m[2]), c = bytesToInt(m[3], m[4]), e = bytesToInt(m[5], m[6]), f = getPlayer(e), f.moveRelativeToServerPosNextFrame = !0, f.lastServerPosSentTime = Date.now();
@@ -501,6 +501,7 @@ function onMessage(a) {
 }
 
 function wsSendMsg(packetType, packetData) {
+  console.log("Sending:", packetType, packetData);
   // Make sure the WebSocket is currently ready to send data:
   if (ws != null && ws.readyState == WebSocket.OPEN) {
     // Generate a new array to push all of the packet data into; this array is later converted into a Uint8Array:
