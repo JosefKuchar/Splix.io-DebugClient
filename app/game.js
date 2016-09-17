@@ -428,7 +428,7 @@ function onMessage(a) {
   if (m[0] == receiveAction.PLAYER_NAME) {
     e = bytesToInt(m[1], m[2]), l = m.subarray(3, m.length);
     var C = Utf8ArrayToStr(l);
-    f = getPlayer(e), f.name = filter(C)
+    f = getPlayer(e), f.name = C
   }
   if (m[0] == receiveAction.MY_SCORE) {
     var D = bytesToInt(m[1], m[2], m[3], m[4]),
@@ -448,7 +448,7 @@ function onMessage(a) {
       var K = document.createElement("td");
       K.innerHTML = "#" + F, J.appendChild(K);
       var L = document.createElement("td");
-      L.innerHTML = filter(htmlEscape(I)), J.appendChild(L);
+      L.innerHTML = htmlEscape(I), J.appendChild(L);
       var M = document.createElement("td");
       M.innerHTML = G, J.appendChild(M), leaderboardElem.appendChild(J), j = j + 5 + H, F++
     }
@@ -1417,7 +1417,7 @@ function loop(a) {
     }
     if (beginScreenVisible && (canvasTransformType = canvasTransformTypes.SKIN_BUTTON, ctxApplyCamTransform(skinButtonCtx, !0), drawBlocks(skinButtonCtx, skinButtonBlocks), skinButtonCtx.restore()), skinScreenVisible && (canvasTransformType = canvasTransformTypes.SKIN, ctxApplyCamTransform(skinCtx, !0), drawBlocks(skinCtx, skinScreenBlocks), skinCtx.restore()), beginScreenVisible && (socialOpacity = lerpt(socialOpacity, socialOTarget, .1), socialElem.style.opacity = Math.min(1, socialOpacity)), beginScreenVisible) {
       if (lastStatTimer += deltaTime, d = lastStatTimer / 2e3, d > 1) {
-        if (lastStatTimer = 0, lastStatCounter++, lastStatCounter > 5 && (lastStatCounter = 0), 0 === lastStatCounter && (lastStatNo1Time <= 0 ? lastStatCounter++ : lastStatValueElem.innerHTML = parseTimeToString(lastStatNo1Time) + " on #1"), 1 == lastStatCounter && ("" === lastStatKiller && lastStatKiller.replace(/\s/g, "").length > 0 ? lastStatCounter++ : lastStatValueElem.innerHTML = "killed by " + filter(htmlEscape(lastStatKiller))), 2 == lastStatCounter)
+        if (lastStatTimer = 0, lastStatCounter++, lastStatCounter > 5 && (lastStatCounter = 0), 0 === lastStatCounter && (lastStatNo1Time <= 0 ? lastStatCounter++ : lastStatValueElem.innerHTML = parseTimeToString(lastStatNo1Time) + " on #1"), 1 == lastStatCounter && ("" === lastStatKiller && lastStatKiller.replace(/\s/g, "").length > 0 ? lastStatCounter++ : lastStatValueElem.innerHTML = "killed by " + htmlEscape(lastStatKiller)), 2 == lastStatCounter)
           if (lastStatKills <= 0) lastStatCounter++;
           else {
             var J = 1 == lastStatKills ? "" : "s";
@@ -1511,17 +1511,6 @@ function toUTF8Array(a) {
 
 function htmlEscape(a) {
   return String(a).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-}
-
-function filter(a) {
-  for (var b = a.split(" "), c = 0; c < b.length; c++) {
-    for (var d = b[c], e = d.toUpperCase() == d, f = 0; f < swearArr.length; f++) {
-      var g = swearArr[f];
-      d.toLowerCase().indexOf(g) >= 0 && (d = d.length < g.length + 2 ? swearRepl : d.toLowerCase().replace(g, swearRepl))
-    }
-    e && (d = d.toUpperCase()), b[c] = d
-  }
-  return b.join(" ")
 }
 
 function Utf8ArrayToStr(a) {
@@ -1982,6 +1971,8 @@ var isConnectingWithTransition = !1,
   },
   dtCaps = [0, 6.5, 16, 33, 49, 99],
   gamePadIsHonking = !1,
+
+  //Gamepads
   customMappings = [{
     name: "Generic USB Joystick",
     buttonMap: {
@@ -2060,6 +2051,4 @@ var isConnectingWithTransition = !1,
       2: 2,
       3: 3
     }
-  },
-  swearArr = "penis;fuck;anal;anus;shit;asshole;bitch;butthole;slut;bitch;gay;nigger;xhamster;cock;cunt;dick;porn".split(";"),
-  swearRepl = "balaboo";
+  }

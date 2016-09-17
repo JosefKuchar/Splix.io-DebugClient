@@ -1,5 +1,6 @@
 var gulp = require("gulp");
 var browserSync = require("browser-sync").create();
+var download = require("gulp-download");
 
 gulp.task("webserver", function() {
   gulp.src("app")
@@ -27,8 +28,13 @@ gulp.task("reload", function() {
     }))
 });
 
+gulp.task("download", function() {
+  return download("http://splix.io/json/servers.json")
+    .pipe(gulp.dest("app"))
+});
+
 gulp.task("watch", function() {
   gulp.watch("app/*", ["reload"]);
 });
 
-gulp.task("default", ["watch", "browserSync"]);
+gulp.task("default", ["watch", "download", "browserSync"]);
