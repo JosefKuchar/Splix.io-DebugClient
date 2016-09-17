@@ -349,12 +349,13 @@ function doConnect(a) {
 }
 
 function onMessage(a) {
-  //m[0] is action
-  var b, c, d, e, f, g, h, i, j, k, l, m = new Uint8Array(a.data);
-  console.log("Recieving:", receiveActionStrings[m[0]] + " (" + m[0] + ") --> ", m.slice(1));
-  if (m[0] == receiveAction.UPDATE_BLOCKS && (b = bytesToInt(m[1], m[2]), c = bytesToInt(m[3], m[4]), d = m[5], i = getBlock(b, c), i.setBlockId(d)), m[0] == receiveAction.PLAYER_POS) {
-    b = bytesToInt(m[1], m[2]), c = bytesToInt(m[3], m[4]), e = bytesToInt(m[5], m[6]), f = getPlayer(e), f.moveRelativeToServerPosNextFrame = !0, f.lastServerPosSentTime = Date.now();
-    var n = m[7],
+  //packet[0] is action
+  //packet[1-end] are data
+  var b, c, d, e, f, g, h, i, j, k, l, packet = new Uint8Array(a.data);
+  console.log("Recieving:", receiveActionStrings[packet[0]] + " (" + packet[0] + ") --> ", packet.slice(1));
+  if (packet[0] == receiveAction.UPDATE_BLOCKS && (b = bytesToInt(packet[1], packet[2]), c = bytesToInt(packet[3], packet[4]), d = packet[5], i = getBlock(b, c), i.setBlockId(d)), packet[0] == receiveAction.PLAYER_POS) {
+    b = bytesToInt(packet[1], packet[2]), c = bytesToInt(packet[3], packet[4]), e = bytesToInt(packet[5], packet[6]), f = getPlayer(e), f.moveRelativeToServerPosNextFrame = !0, f.lastServerPosSentTime = Date.now();
+    var n = packet[7],
       o = [b, c],
       p = [b, c],
       q = !0;
@@ -368,22 +369,22 @@ function onMessage(a) {
     } else f.dir = n;
     if (q) {
       f.pos = p;
-      var t = m.length > 8;
+      var t = packet.length > 8;
       t && trailPush(f, o)
     }
     f.drawPosSet || (f.drawPos = [f.pos[0], f.pos[1]], f.drawPosSet = !0)
   }
-  if (m[0] == receiveAction.FILL_AREA) {
-    b = bytesToInt(m[1], m[2]), c = bytesToInt(m[3], m[4]), g = bytesToInt(m[5], m[6]), h = bytesToInt(m[7], m[8]), d = m[9];
-    var u = m[10];
+  if (packet[0] == receiveAction.FILL_AREA) {
+    b = bytesToInt(packet[1], packet[2]), c = bytesToInt(packet[3], packet[4]), g = bytesToInt(packet[5], packet[6]), h = bytesToInt(packet[7], packet[8]), d = packet[9];
+    var u = packet[10];
     fillArea(b, c, g, h, d, u)
   }
-  if (m[0] == receiveAction.SET_TRAIL) {
-    e = bytesToInt(m[1], m[2]), f = getPlayer(e);
+  if (packet[0] == receiveAction.SET_TRAIL) {
+    e = bytesToInt(packet[1], packet[2]), f = getPlayer(e);
     var v = [],
       w = !1;
-    for (j = 3; j < m.length; j += 4) {
-      var x = [bytesToInt(m[j], m[j + 1]), bytesToInt(m[j + 2], m[j + 3])];
+    for (j = 3; j < packet.length; j += 4) {
+      var x = [bytesToInt(packet[j], packet[j + 1]), bytesToInt(packet[j + 2], packet[j + 3])];
       v.push(x)
     }
     if (f.isMyPlayer)
@@ -408,40 +409,40 @@ function onMessage(a) {
       vanishTimer: 0
     })
   }
-  if (m[0] == receiveAction.EMPTY_TRAIL_WITH_LAST_POS) {
-    if (e = bytesToInt(m[1], m[2]), f = getPlayer(e), f.trails.length > 0) {
+  if (packet[0] == receiveAction.EMPTY_TRAIL_WITH_LAST_POS) {
+    if (e = bytesToInt(packet[1], packet[2]), f = getPlayer(e), f.trails.length > 0) {
       var A = f.trails[f.trails.length - 1].trail;
-      A.length > 0 && (b = bytesToInt(m[3], m[4]), c = bytesToInt(m[5], m[6]), A.push([b, c]))
+      A.length > 0 && (b = bytesToInt(packet[3], packet[4]), c = bytesToInt(packet[5], packet[6]), A.push([b, c]))
     }
     f.isMyPlayer && isRequestingMyTrail && (skipTrailRequestResponse = !0), f.trails.push({
       trail: [],
       vanishTimer: 0
     })
   }
-  if (m[0] == receiveAction.PLAYER_DIE && (e = bytesToInt(m[1], m[2]), f = getPlayer(e), m.length > 3 && (b = bytesToInt(m[3], m[4]), c = bytesToInt(m[5], m[6]), f.pos = [b, c]), f.die(!0)), m[0] == receiveAction.CHUNK_OF_BLOCKS) {
-    for (b = bytesToInt(m[1], m[2]), c = bytesToInt(m[3], m[4]), g = bytesToInt(m[5], m[6]), h = bytesToInt(m[7], m[8]), j = 9, k = b; k < b + g; k++)
-      for (var B = c; B < c + h; B++) i = getBlock(k, B), i.setBlockId(m[j], !1), j++;
+  if (packet[0] == receiveAction.PLAYER_DIE && (e = bytesToInt(packet[1], packet[2]), f = getPlayer(e), packet.length > 3 && (b = bytesToInt(packet[3], packet[4]), c = bytesToInt(packet[5], packet[6]), f.pos = [b, c]), f.die(!0)), packet[0] == receiveAction.CHUNK_OF_BLOCKS) {
+    for (b = bytesToInt(packet[1], packet[2]), c = bytesToInt(packet[3], packet[4]), g = bytesToInt(packet[5], packet[6]), h = bytesToInt(packet[7], packet[8]), j = 9, k = b; k < b + g; k++)
+      for (var B = c; B < c + h; B++) i = getBlock(k, B), i.setBlockId(packet[j], !1), j++;
     hasReceivedChunkThisGame || (hasReceivedChunkThisGame = !0, wsSendMsg(sendAction.READY), didSendSecondReady = !0)
   }
-  if (m[0] == receiveAction.REMOVE_PLAYER)
-    for (e = bytesToInt(m[1], m[2]), j = players.length - 1; j >= 0; j--) f = players[j], e == f.id && players.splice(j, 1);
-  if (m[0] == receiveAction.PLAYER_NAME) {
-    e = bytesToInt(m[1], m[2]), l = m.subarray(3, m.length);
+  if (packet[0] == receiveAction.REMOVE_PLAYER)
+    for (e = bytesToInt(packet[1], packet[2]), j = players.length - 1; j >= 0; j--) f = players[j], e == f.id && players.splice(j, 1);
+  if (packet[0] == receiveAction.PLAYER_NAME) {
+    e = bytesToInt(packet[1], packet[2]), l = packet.subarray(3, packet.length);
     var C = Utf8ArrayToStr(l);
     f = getPlayer(e), f.name = C
   }
-  if (m[0] == receiveAction.MY_SCORE) {
-    var D = bytesToInt(m[1], m[2], m[3], m[4]),
+  if (packet[0] == receiveAction.MY_SCORE) {
+    var D = bytesToInt(packet[1], packet[2], packet[3], packet[4]),
       E = 0;
-    m.length > 5 && (E = bytesToInt(m[5], m[6])), scoreStatTarget = D, realScoreStatTarget = D + 500 * E, myKillsElem.innerHTML = E
+    packet.length > 5 && (E = bytesToInt(packet[5], packet[6])), scoreStatTarget = D, realScoreStatTarget = D + 500 * E, myKillsElem.innerHTML = E
   }
-  if (m[0] == receiveAction.MY_RANK && (myRank = bytesToInt(m[1], m[2]), myRankSent = !0, updateStats()), m[0] == receiveAction.LEADERBOARD) {
-    leaderboardElem.innerHTML = "", totalPlayers = bytesToInt(m[1], m[2]), updateStats(), j = 3;
+  if (packet[0] == receiveAction.MY_RANK && (myRank = bytesToInt(packet[1], packet[2]), myRankSent = !0, updateStats()), packet[0] == receiveAction.LEADERBOARD) {
+    leaderboardElem.innerHTML = "", totalPlayers = bytesToInt(packet[1], packet[2]), updateStats(), j = 3;
     for (var F = 1;;) {
-      if (j >= m.length) break;
-      var G = bytesToInt(m[j], m[j + 1], m[j + 2], m[j + 3]),
-        H = m[j + 4];
-      l = m.subarray(j + 5, j + 5 + H);
+      if (j >= packet.length) break;
+      var G = bytesToInt(packet[j], packet[j + 1], packet[j + 2], packet[j + 3]),
+        H = packet[j + 4];
+      l = packet.subarray(j + 5, j + 5 + H);
       var I = Utf8ArrayToStr(l),
         J = document.createElement("tr");
       J.className = "scoreRank";
@@ -454,10 +455,10 @@ function onMessage(a) {
     }
     totalPlayers < 30 && doRefreshAfterDie && (closeNotification.style.display = null)
   }
-  if (m[0] == receiveAction.MAP_SIZE && (mapSize = bytesToInt(m[1], m[2])), m[0] == receiveAction.YOU_DED) {
-    if (m.length > 1) switch (lastStatBlocks = bytesToInt(m[1], m[2], m[3], m[4]), lastStatKills = bytesToInt(m[5], m[6]), lastStatLbRank = bytesToInt(m[7], m[8]), lastStatAlive = bytesToInt(m[9], m[10], m[11], m[12]), lastStatNo1Time = bytesToInt(m[13], m[14], m[15], m[16]), lastStatDeathType = m[17], lastStatKiller = "", document.getElementById("lastStats").style.display = null, lastStatCounter = 0, lastStatTimer = 0, lastStatValueElem.innerHTML = "", lastStatDeathType) {
+  if (packet[0] == receiveAction.MAP_SIZE && (mapSize = bytesToInt(packet[1], packet[2])), packet[0] == receiveAction.YOU_DED) {
+    if (packet.length > 1) switch (lastStatBlocks = bytesToInt(packet[1], packet[2], packet[3], packet[4]), lastStatKills = bytesToInt(packet[5], packet[6]), lastStatLbRank = bytesToInt(packet[7], packet[8]), lastStatAlive = bytesToInt(packet[9], packet[10], packet[11], packet[12]), lastStatNo1Time = bytesToInt(packet[13], packet[14], packet[15], packet[16]), lastStatDeathType = packet[17], lastStatKiller = "", document.getElementById("lastStats").style.display = null, lastStatCounter = 0, lastStatTimer = 0, lastStatValueElem.innerHTML = "", lastStatDeathType) {
       case 1:
-        m.length > 18 && (l = m.subarray(18, m.length), lastStatKiller = Utf8ArrayToStr(l));
+        packet.length > 18 && (l = packet.subarray(18, packet.length), lastStatKiller = Utf8ArrayToStr(l));
         break;
       case 2:
         lastStatKiller = "the wall";
@@ -473,29 +474,29 @@ function onMessage(a) {
       }), deathTransitionTimeout = null
     }, 1e3)
   }
-  if (m[0] == receiveAction.MINIMAP) {
-    var N = m[1],
+  if (packet[0] == receiveAction.MINIMAP) {
+    var N = packet[1],
       O = 20 * N;
-    for (minimapCtx.clearRect(2 * O, 0, 40, 160), minimapCtx.fillStyle = "#000000", j = 1; j < m.length; j++)
+    for (minimapCtx.clearRect(2 * O, 0, 40, 160), minimapCtx.fillStyle = "#000000", j = 1; j < packet.length; j++)
       for (k = 0; k < 8; k++) {
-        var P = 0 !== (m[j] & 1 << k);
+        var P = 0 !== (packet[j] & 1 << k);
         if (P) {
           var Q = 8 * (j - 2) + k;
           b = Math.floor(Q / 80) % 80 + O, c = Q % 80, minimapCtx.fillRect(2 * b, 2 * c, 2, 2)
         }
       }
   }
-  if (m[0] == receiveAction.PLAYER_SKIN && (e = bytesToInt(m[1], m[2]), f = getPlayer(e), f.isMyPlayer && colorUI(m[3]), f.skinBlock = m[3]), m[0] == receiveAction.READY && (playingAndReady = !0, isTransitioning || (isTransitioning = !0, hideBeginShowMainCanvas())), m[0] == receiveAction.PLAYER_HIT_LINE) {
-    e = bytesToInt(m[1], m[2]), f = getPlayer(e);
-    var R = getColorForBlockSkinId(m[3]);
-    b = bytesToInt(m[4], m[5]), c = bytesToInt(m[6], m[7]), f.addHitLine([b, c], R), f.isMyPlayer && doCamShakeDir(f.dir, 10, !1)
+  if (packet[0] == receiveAction.PLAYER_SKIN && (e = bytesToInt(packet[1], packet[2]), f = getPlayer(e), f.isMyPlayer && colorUI(packet[3]), f.skinBlock = packet[3]), packet[0] == receiveAction.READY && (playingAndReady = !0, isTransitioning || (isTransitioning = !0, hideBeginShowMainCanvas())), packet[0] == receiveAction.PLAYER_HIT_LINE) {
+    e = bytesToInt(packet[1], packet[2]), f = getPlayer(e);
+    var R = getColorForBlockSkinId(packet[3]);
+    b = bytesToInt(packet[4], packet[5]), c = bytesToInt(packet[6], packet[7]), f.addHitLine([b, c], R), f.isMyPlayer && doCamShakeDir(f.dir, 10, !1)
   }
-  if (m[0] == receiveAction.REFRESH_AFTER_DIE && (doRefreshAfterDie = !0), m[0] == receiveAction.PLAYER_HONK) {
-    e = bytesToInt(m[1], m[2]), f = getPlayer(e);
-    var S = m[3];
+  if (packet[0] == receiveAction.REFRESH_AFTER_DIE && (doRefreshAfterDie = !0), packet[0] == receiveAction.PLAYER_HONK) {
+    e = bytesToInt(packet[1], packet[2]), f = getPlayer(e);
+    var S = packet[3];
     f.doHonk(S)
   }
-  if (m[0] == receiveAction.PONG) {
+  if (packet[0] == receiveAction.PONG) {
     var T = Date.now() - lastPingTime;
     thisServerAvgPing = lerp(thisServerAvgPing, T, .5), lastPingTime = Date.now(), waitingForPing = !1
   }
