@@ -349,8 +349,9 @@ function doConnect(a) {
 }
 
 function onMessage(a) {
-  console.log("Recieving:", a);
+  //m[0] is action
   var b, c, d, e, f, g, h, i, j, k, l, m = new Uint8Array(a.data);
+  console.log("Recieving:", m[0]);
   if (m[0] == receiveAction.UPDATE_BLOCKS && (b = bytesToInt(m[1], m[2]), c = bytesToInt(m[3], m[4]), d = m[5], i = getBlock(b, c), i.setBlockId(d)), m[0] == receiveAction.PLAYER_POS) {
     b = bytesToInt(m[1], m[2]), c = bytesToInt(m[3], m[4]), e = bytesToInt(m[5], m[6]), f = getPlayer(e), f.moveRelativeToServerPosNextFrame = !0, f.lastServerPosSentTime = Date.now();
     var n = m[7],
@@ -570,9 +571,7 @@ function initTutorial() {
 function initSkinScreen() {
   skinButtonCanvas = document.getElementById("skinButton"), skinButtonShadow = document.getElementById("skinButtonShadow"), shareTw = document.getElementById("shareTw"), shareFb = document.getElementById("shareFb"), shareTw.onclick = function() {
     popUp("https://twitter.com/intent/tweet?text=Check%20out%20this%20game%20I%27ve%20just%20found&amp;url=http://splix.io&amp;hashtags=splixio&amp;related=splixio%3AOfficial%20Twitter%20account,jespertheend%3ADeveloper,", 500, 300), share()
-  }, shareFb.onclick = function() {
-    popUp("https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2Fsplix.io%2F&display=popup&ref=plugin&src=like&app_id=840486436000126", 500, 300), share()
-  }, shareToUnlock = document.getElementById("shareToUnlock"), skinButtonCtx = skinButtonCanvas.getContext("2d"), skinButtonCanvas.onclick = function() {
+  }, shareFb.onclick = function() {}, shareToUnlock = document.getElementById("shareToUnlock"), skinButtonCtx = skinButtonCanvas.getContext("2d"), skinButtonCanvas.onclick = function() {
     ws || isTransitioning || playingAndReady || doTransition("", !1, openSkinScreen)
   };
   var a = localStorage.getItem("skinColor");
@@ -659,39 +658,7 @@ function showCursor() {
   document.body.style.cursor = null
 }
 
-function afterDeath() {
-  switch (afterDeathCounter++, afterDeathCounter) {
-    case 1:
-      window.twttr = function(a, b, c) {
-          var d, e = a.getElementsByTagName(b)[0],
-            f = window.twttr || {};
-          return a.getElementById(c) ? f : (d = a.createElement(b), d.id = c, d.src = "https://platform.twitter.com/widgets.js", e.parentNode.insertBefore(d, e), f._e = [], f.ready = function(a) {
-            f._e.push(a)
-          }, f)
-        }(document, "script", "twitter-wjs"), twttr.ready(function(a) {
-          a.events.bind("rendered", function() {
-            twttrIsInit = !0, testSocialReady()
-          }), a.events.bind("tweet", function() {
-            share()
-          })
-        }), window.fbAsyncInit = function() {
-          FB.Event.subscribe("xfbml.render", function() {
-            fbIsInit = !0, testSocialReady()
-          })
-        },
-        function(a, b, c) {
-          var d, e = a.getElementsByTagName(b)[0];
-          a.getElementById(c) || (d = a.createElement(b), d.id = c, d.src = "//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5&appId=1812921762327343", e.parentNode.insertBefore(d, e))
-        }(document, "script", "facebook-jssdk");
-      var a = document.getElementsByTagName("head")[0],
-        b = document.createElement("script");
-      b.type = "text/javascript", b.src = "https://apis.google.com/js/platform.js", b.onload = function() {
-        ytIsInit = !0
-      }, a.appendChild(b);
-      var c = document.createElement("script");
-      c.type = "text/javascript", c.src = "/js/ads.js", c.onload = function() {}, c.onerror = function() {}, a.appendChild(c), document.getElementById("adbox").style.display = null
-  }
-}
+function afterDeath() {}
 
 function testSocialReady() {
   twttrIsInit && fbIsInit && ytIsInit && !doneOnSocialReady && (doneOnSocialReady = !0, onSocialReady())
