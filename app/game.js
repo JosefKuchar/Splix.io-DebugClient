@@ -351,7 +351,7 @@ function doConnect(a) {
 function onMessage(a) {
   //m[0] is action
   var b, c, d, e, f, g, h, i, j, k, l, m = new Uint8Array(a.data);
-  console.log("Recieving:", m[0]);
+  console.log("Recieving:", receiveActionStrings[m[0]] + " (" + m[0] + ") --> ", m.slice(1));
   if (m[0] == receiveAction.UPDATE_BLOCKS && (b = bytesToInt(m[1], m[2]), c = bytesToInt(m[3], m[4]), d = m[5], i = getBlock(b, c), i.setBlockId(d)), m[0] == receiveAction.PLAYER_POS) {
     b = bytesToInt(m[1], m[2]), c = bytesToInt(m[3], m[4]), e = bytesToInt(m[5], m[6]), f = getPlayer(e), f.moveRelativeToServerPosNextFrame = !0, f.lastServerPosSentTime = Date.now();
     var n = m[7],
@@ -502,7 +502,8 @@ function onMessage(a) {
 }
 
 function wsSendMsg(packetType, packetData) {
-  console.log("Sending:", packetType, packetData);
+  console.log("Sending:", sendActionStrings[packetType] + " (" + packetType + ") --> ", packetData);
+
   // Make sure the WebSocket is currently ready to send data:
   if (ws != null && ws.readyState == WebSocket.OPEN) {
     // Generate a new array to push all of the packet data into; this array is later converted into a Uint8Array:
@@ -1706,6 +1707,10 @@ var SKIN_BLOCK_COUNT = 12,
     PLAYER_HONK: 20,
     PONG: 21
   },
+  receiveActionStrings = [
+    "", "UPDATE_BLOCKS", "PLAYER_POS", "FILL_AREA", "SET_TRAIL", "PLAYER_DIE", "CHUNK_OF_BLOCKS", "REMOVE_PLAYER", "PLAYER_NAME", "MY_SCORE", "MY_RANK", "LEADERBOARD",
+    "MAP_SIZE", "YOU_DED", "MINIMAP", "PLAYER_SKIN", "EMPTY_TRAIL_WITH_LAST_POS", "READY", "PLAYER_HIT_LINE", "REFRESH_AFTER_DIE", "PLAYER_HONK", "PONG"
+  ],
   sendAction = {
     UPDATE_DIR: 1,
     SET_USERNAME: 2,
@@ -1716,6 +1721,7 @@ var SKIN_BLOCK_COUNT = 12,
     PING: 7,
     REQUEST_MY_TRAIL: 8
   },
+  sendActionStrings = ["", "UPDATE_DIR", "SET_USERNAME", "SKIN", "READY", "REQUEST_CLOSE", "HONK", "PING", "REQUEST_MY_TRAIL"],
   colors = {
     grey: {
       BG: "#3a342f",

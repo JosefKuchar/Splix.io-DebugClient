@@ -14,7 +14,7 @@
 }
 
 #shareText, .skinButton {
-    background-image: url(/img/arrow.svg)
+    background-image: url(http://splix.io/img/arrow.svg)
 }
 
 #joinButton, #skinButton, #skinSave, .shareButton, .skinButton {
@@ -274,7 +274,7 @@ body {
 
 .skinButtonRight {
     right: 5px;
-    background-image: url(/img/arrowR.svg)
+    background-image: url(http://splix.io/img/arrowR.svg)
 }
 
 .skinButtonRight:active {
@@ -398,12 +398,12 @@ body {
 }
 
 #shareTw {
-    background-image: url(/img/twitter.svg);
+    background-image: url(http://splix.io/img/twitter.svg);
     width: 35px
 }
 
 #shareFb {
-    background-image: url(/img/facebook.svg)
+    background-image: url(http://splix.io/img/facebook.svg)
 }
 
 #social {
