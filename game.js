@@ -260,7 +260,7 @@ function honkEnd() {
 }
 
 function onOpen() {
-  isConnecting = !1, sendName(), sendSkin(), wsSendMsg(sendAction.READY), playingAndReady && hideBeginShowMainCanvas(), ga("send", "event", "Game", "game_start"), wsOnOpenTime = Date.now()
+  isConnecting = !1, sendName(), sendSkin(), wsSendMsg(sendAction.READY), playingAndReady && hideBeginShowMainCanvas(), wsOnOpenTime = Date.now()
 }
 
 function hideBeginShowMainCanvas() {
@@ -311,7 +311,7 @@ function onClose() {
   if (ws && ws.readyState == WebSocket.OPEN && ws.close(), playingAndReady)
     if (closedBecauseOfDeath) {
       var a = Date.now() - wsOnOpenTime;
-    } else doTransition("", !1, resetAll), ga("send", "event", "Game", "lost_connection_mid_game"), setNotification("The connection was lost :/");
+    } else doTransition("", !1, resetAll), setNotification("The connection was lost :/");
   else isTransitioning ? showCouldntConnectAfterTransition = !0 : couldntConnect() && showBeginHideMainCanvas();
   ws = null, isConnecting = !1
 }
@@ -626,9 +626,7 @@ function noAdsReturned() {
   onAdError("no ads returned")
 }
 
-function onAdLoaded(a) {
-  console.log("ad loaded"), lsSet("refreshDuringAd", "true"), ga("send", "event", "ads", "ad_loaded"), document.getElementById("shareText").className = shareToUnlock.className = "adRunning"
-}
+function onAdLoaded(a) {}
 
 function scrollAd() {
   var a = prerollElem.offsetTop,
@@ -691,11 +689,7 @@ function afterDeath() {
         ytIsInit = !0
       }, a.appendChild(b);
       var c = document.createElement("script");
-      c.type = "text/javascript", c.src = "/js/ads.js", c.onload = function() {
-        ga("set", "dimension2", canRunAds ? "yes" : "no")
-      }, c.onerror = function() {
-        ga("set", "dimension2", "no")
-      }, a.appendChild(c), document.getElementById("adbox").style.display = null
+      c.type = "text/javascript", c.src = "/js/ads.js", c.onload = function() {}, c.onerror = function() {}, a.appendChild(c), document.getElementById("adbox").style.display = null
   }
 }
 
