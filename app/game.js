@@ -248,13 +248,13 @@ function honkStart() {
 }
 
 function honkEnd() {
-  var a = Date.now();
-  if (a > lastHonkTime) {
-    var b = a - honkStartTime;
-    b = clamp(b, 0, 1e3), lastHonkTime = a + b, b = iLerp(0, 1e3, b), b *= 255, b = Math.floor(b), wsSendMsg(sendAction.HONK, b);
+  var currentTime = Date.now();
+  if (currentTime > lastHonkTime) {
+    var deltaTime = currentTime - honkStartTime;
+    deltaTime = clamp(deltaTime, 0, 1e3), lastHonkTime = currentTime + deltaTime, deltaTime = iLerp(0, 1e3, deltaTime), deltaTime *= 255, deltaTime = Math.floor(deltaTime), wsSendMsg(sendAction.HONK, deltaTime);
     for (var c = 0; c < players.length; c++) {
       var d = players[c];
-      d.isMyPlayer && d.doHonk(Math.max(70, b))
+      d.isMyPlayer && d.doHonk(Math.max(70, deltaTime))
     }
   }
 }
@@ -348,11 +348,15 @@ function doConnect(a) {
   return !1
 }
 
+//TODO: Create objects debug
 function onMessage(a) {
   //packet[0] is action
   //packet[1-end] are data
   var b, c, d, e, f, g, h, i, j, k, l, packet = new Uint8Array(a.data);
-  console.log("Recieving:", receiveActionStrings[packet[0]] + " (" + packet[0] + ") --> ", packet.slice(1));
+  var data = {
+    RAW: packet.slice(1),
+    Objects: {}
+  }
   if (packet[0] == receiveAction.UPDATE_BLOCKS && (b = bytesToInt(packet[1], packet[2]), c = bytesToInt(packet[3], packet[4]), d = packet[5], i = getBlock(b, c), i.setBlockId(d)), packet[0] == receiveAction.PLAYER_POS) {
     b = bytesToInt(packet[1], packet[2]), c = bytesToInt(packet[3], packet[4]), e = bytesToInt(packet[5], packet[6]), f = getPlayer(e), f.moveRelativeToServerPosNextFrame = !0, f.lastServerPosSentTime = Date.now();
     var n = packet[7],
@@ -377,7 +381,7 @@ function onMessage(a) {
   if (packet[0] == receiveAction.FILL_AREA) {
     b = bytesToInt(packet[1], packet[2]), c = bytesToInt(packet[3], packet[4]), g = bytesToInt(packet[5], packet[6]), h = bytesToInt(packet[7], packet[8]), d = packet[9];
     var u = packet[10];
-    fillArea(b, c, g, h, d, u)
+    fillArea(b, c, g, h, d, u);
   }
   if (packet[0] == receiveAction.SET_TRAIL) {
     e = bytesToInt(packet[1], packet[2]), f = getPlayer(e);
@@ -500,10 +504,30 @@ function onMessage(a) {
     var T = Date.now() - lastPingTime;
     thisServerAvgPing = lerp(thisServerAvgPing, T, .5), lastPingTime = Date.now(), waitingForPing = !1
   }
+
+  data.Objects = {
+    b: b,
+    c: c,
+    d: d,
+    e: e,
+    f: f,
+    g: g,
+    h: h,
+    i: i,
+    j: j,
+    k: k,
+    l: l
+  };
+
+  console.log("Recieving:", receiveActionStrings[packet[0]] + " (" + packet[0] + ") --> ", data);
 }
 
 function wsSendMsg(packetType, packetData) {
-  console.log("Sending:", sendActionStrings[packetType] + " (" + packetType + ") --> ", packetData);
+  var data = {
+    RAW: [],
+    Objects: packetData
+  }
+
 
   // Make sure the WebSocket is currently ready to send data:
   if (ws != null && ws.readyState == WebSocket.OPEN) {
@@ -543,6 +567,8 @@ function wsSendMsg(packetType, packetData) {
     var UintPacket = new Uint8Array(packet);
     // attempt send
     try {
+      data.RAW = UintPacket;
+      console.log("Sending:", sendActionStrings[packetType] + " (" + packetType + ") --> ", data);
       return ws.send(UintPacket), true;
     } catch (ERROR) {
       console.log("Error sending packet:", packetType, packetData, packet, ERROR)
