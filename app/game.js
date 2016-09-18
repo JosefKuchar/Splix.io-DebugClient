@@ -376,9 +376,9 @@ function doConnect(a) {
 function onMessage(a) {
   //packet[0] is action
   //packet[1-end] are data
-  var b, c, d, e, f, g, h, i, j, k, l, packet = new Uint8Array(a.data);
+  var b, c, d, e, f, g, h, i, j, k, l, u, packet = new Uint8Array(a.data);
   var data = {
-    RAW: packet.slice(1),
+    RAW: packet,
     Objects: {}
   }
   if (packet[0] == receiveAction.UPDATE_BLOCKS && (b = bytesToInt(packet[1], packet[2]), c = bytesToInt(packet[3], packet[4]), d = packet[5], i = getBlock(b, c), i.setBlockId(d)), packet[0] == receiveAction.PLAYER_POS) {
@@ -404,7 +404,7 @@ function onMessage(a) {
   }
   if (packet[0] == receiveAction.FILL_AREA) {
     b = bytesToInt(packet[1], packet[2]), c = bytesToInt(packet[3], packet[4]), g = bytesToInt(packet[5], packet[6]), h = bytesToInt(packet[7], packet[8]), d = packet[9];
-    var u = packet[10];
+    u = packet[10];
     fillArea(b, c, g, h, d, u);
   }
   if (packet[0] == receiveAction.SET_TRAIL) {
@@ -522,11 +522,11 @@ function onMessage(a) {
   if (packet[0] == receiveAction.REFRESH_AFTER_DIE && (doRefreshAfterDie = !0), packet[0] == receiveAction.PLAYER_HONK) {
     e = bytesToInt(packet[1], packet[2]), f = getPlayer(e);
     var S = packet[3];
-    f.doHonk(S)
+    f.doHonk(S);
   }
   if (packet[0] == receiveAction.PONG) {
     var T = Date.now() - lastPingTime;
-    thisServerAvgPing = lerp(thisServerAvgPing, T, .5), lastPingTime = Date.now(), waitingForPing = !1
+    thisServerAvgPing = lerp(thisServerAvgPing, T, .5), lastPingTime = Date.now(), waitingForPing = !1;
   }
 
   data.Objects = {
@@ -540,7 +540,8 @@ function onMessage(a) {
     i: i,
     j: j,
     k: k,
-    l: l
+    l: l,
+    u: u,
   };
 
   console.log("Recieving:", receiveActionStrings[packet[0]] + " (" + packet[0] + ") --> ", data);
@@ -979,17 +980,39 @@ function orderTwoPos(a, b) {
 }
 
 function fillArea(a, b, c, d, e, f, g) {
+  //If g is undefined, h is true, otherwise, h is false
   var h = void 0 === g;
-  h && (g = blocks), void 0 === f && (f = 0);
-  var i = a + c,
-    j = b + d;
-  null !== myPos && h && (a = Math.max(a, Math.round(myPos[0]) - VIEWPORT_RADIUS), b = Math.max(b, Math.round(myPos[1]) - VIEWPORT_RADIUS), i = Math.min(i, Math.round(myPos[0]) + VIEWPORT_RADIUS), j = Math.min(j, Math.round(myPos[1]) + VIEWPORT_RADIUS));
-  for (var k = a; k < i; k++)
-    for (var l = b; l < j; l++) {
-      var m = getBlock(k, l, g),
-        n = applyPattern(e, f, k, l);
-      m.setBlockId(n, 400 * Math.random())
+
+  //If h is undefined, g is blocks
+  h && (g = blocks);
+
+  //If f is undefined, f = 0
+  void 0 === f && (f = 0);
+
+
+  var i = a + c;
+
+  j = b + d;
+
+  //If my position is not null and if h is true
+  if (null !== myPos && h) {
+    a = Math.max(a, Math.round(myPos[0]) - VIEWPORT_RADIUS);
+    b = Math.max(b, Math.round(myPos[1]) - VIEWPORT_RADIUS);
+    i = Math.min(i, Math.round(myPos[0]) + VIEWPORT_RADIUS);
+    j = Math.min(j, Math.round(myPos[1]) + VIEWPORT_RADIUS);
+  }
+
+  //Loop between a and i
+  for (var x = a; x < i; x++) {
+    //Loop between b and j
+    for (var y = b; y < j; y++) {
+      var m = getBlock(x, y, g);
+
+      n = applyPattern(e, f, x, y);
+
+      m.setBlockId(n, 400 * Math.random());
     }
+  }
 }
 
 function applyPattern(a, b, c, d) {
@@ -1393,7 +1416,7 @@ function loop(a) {
         }
         tCtx.restore()
       }
-      skipDeathTransition && "GAME OVER" == transitionText && transitionTimer > 1 && (transitionTimer = 1.1, transitionDirection = -1, allowSkipDeathTransition = !1, skipDeathTransition = !1)
+      skipDeathTransition && "GAME OVER" == transitionText && transitionTimer > 1 && (transitionTimer = 1.1, transitionDirection = -1, allowSkipitionDirection = -1, allowSkipitionDirection = -1, allowSkipDeathTransition = !1, skipDeathTransition = !1)
     }
     if (beginScreenVisible && a - titleLastRender > 49 && (resetTitleNextFrame && (resetTitleNextFrame = !1, titleTimer = -1, titleLastRender = a), titleTimer += .002 * (a - titleLastRender), titleLastRender = a, canvasTransformType = canvasTransformTypes.TITLE, ctxCanvasSize(titCtx), ctxApplyCamTransform(titCtx), drawTitle(titCtx, titleTimer, !0, 0, !0), drawTitle(titCtx, titleTimer, !0, 2.5), drawTitle(titCtx, titleTimer), titCtx.restore()), beginScreenVisible) {
       tutorialTimer += deltaTime * GLOBAL_SPEED * .7, canvasTransformType = canvasTransformTypes.TUTORIAL, ctxCanvasSize(tutCtx), ctxCanvasSize(linesCtx), tutCtx.fillStyle = colors.grey.BG, tutCtx.fillRect(0, 0, tutorialCanvas.width, tutorialCanvas.height), linesCtx.fillStyle = "white", linesCtx.fillRect(0, 0, linesCanvas.width, linesCanvas.height), ctxApplyCamTransform(tutCtx), ctxApplyCamTransform(linesCtx), d = tutorialTimer, drawBlocks(tutCtx, tutorialBlocks);
